@@ -1,16 +1,27 @@
 import { handleActions } from "redux-actions";
-import Immutable from "immutable";
 
-const defaultState = Immutable.fromJS({
+const defaultState = {
   user: null,
   token: null
-});
+};
 
 const authUserReducer = handleActions(
   {
     AUTH_USER_SUCCESS: (state, action) => {
       const { data, token } = action.payload;
-      return state.set("user", Immutable.fromJS(data)).set("token", token);
+      return {
+        ...state,
+        user: data,
+        token: token
+      };
+    },
+    LOGOUT: (state, action) => {
+      console.log("state", state);
+      return {
+        ...state,
+        user: null,
+        token: ""
+      };
     }
   },
   defaultState

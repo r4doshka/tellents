@@ -34,7 +34,6 @@ class Landing extends Component {
         password
       })
       .then(resp => {
-        // console.log(resp);
         const { error, payload } = resp;
         if (error) {
           return {
@@ -43,11 +42,16 @@ class Landing extends Component {
             email: ["Wrong Email"]
           };
         }
+        this.setState(
+          {
+            modalLogin: false
+          },
+          () => this.props.history.push("/search")
+        );
       });
   };
   // eslint-disable-next-line
   handleRegistration = ({ first_name, last_name, email, password }) => {
-    // console.log("s formi dannie ", this.props);
     return this.props
       .registrationUser({
         first_name,
@@ -57,7 +61,7 @@ class Landing extends Component {
       })
       .then(resp => {
         const { error, payload } = resp;
-        console.log("payload ", resp);
+        // console.log("payload ", resp);
         if (error) {
           return {
             [FORM_ERROR]: payload.response.errors,
@@ -67,26 +71,34 @@ class Landing extends Component {
             email: ["Wrong Email"]
           };
         }
+        this.setState(
+          {
+            modalRegistration: false
+          },
+          () => this.props.history.push("/search")
+        );
       });
   };
 
   render() {
-    console.log(this.props);
+    //  console.log("landing props ", this.props);
+    const { globalError, isGlobalError } = this.props;
+    const { modalLogin, modalRegistration } = this.state;
     return (
       <div className="landing">
-        {this.props.isGlobalError && (
+        {isGlobalError && (
           <div>
-            <h1>{this.props.globalError}</h1>
+            <h1>{globalError}</h1>
           </div>
         )}
         <ModalLogin
-          modal={this.state.modalLogin}
+          modal={modalLogin}
           openModal={this.openModalLogin}
           closeModal={this.closeModalLogin}
           handleSubmit={this.handleLogin}
         />
         <ModalRegistration
-          modal={this.state.modalRegistration}
+          modal={modalRegistration}
           openModal={this.openModalRegistration}
           closeModal={this.closeModalRegistration}
           handleSubmit={this.handleRegistration}
@@ -186,6 +198,7 @@ class Landing extends Component {
                             id="jobs-filter"
                             value="jobs-filter"
                             checked=""
+                            onChange={() => {}}
                           />
                           <label htmlFor="jobs-filter">
                             <span className="icon icon-next-arrow" />
@@ -796,7 +809,8 @@ Landing.propTypes = {
   authUser: PropTypes.func,
   registrationUser: PropTypes.func,
   globalError: PropTypes.object,
-  isGlobalError: PropTypes.bool
+  isGlobalError: PropTypes.bool,
+  history: PropTypes.object
 };
 
 export default Landing;

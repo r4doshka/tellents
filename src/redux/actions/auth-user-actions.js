@@ -1,7 +1,6 @@
-// eslint-disable-next-line
-import { createAction } from "redux-actions";
-
 import { RSAA } from "redux-api-middleware";
+
+const LOGOUT = "LOGOUT";
 
 export const authUser = ({ email, password }) => ({
   [RSAA]: {
@@ -27,3 +26,9 @@ export const authUser = ({ email, password }) => ({
     ]
   }
 });
+
+export const logout = () => {
+  return {
+    type: LOGOUT
+  };
+};

@@ -5,7 +5,6 @@
 @import url('buttons.css');
 
 html, body,
-body section,
 body header  {
 	min-height: 100vh;
     height: auto;
@@ -324,7 +323,7 @@ body header  {
 
 
 /*SECTIONS - START*/
-section {
+landing .section {
 	/*padding: 100px 0;*/
 	padding: 70px 0;
 	background-color: #f0f4f5;

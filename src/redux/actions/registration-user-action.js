@@ -28,6 +28,7 @@ export const registrationUser = ({
         type: "AUTH_USER_SUCCESS",
         payload: (action, state, res) => {
           const token = res.headers.get("Access-Token");
+          console.log("registration", res);
           return res.json().then(json => ({ token, ...json }));
         }
       },

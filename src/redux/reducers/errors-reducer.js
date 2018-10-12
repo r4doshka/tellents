@@ -1,10 +1,9 @@
 import { handleActions } from "redux-actions";
-import Immutable from "immutable";
 
-const defaultState = Immutable.fromJS({
+const defaultState = {
   isGlobalError: false,
   globalError: []
-});
+};
 
 const errorsReducer = handleActions(
   {
@@ -17,9 +16,11 @@ const errorsReducer = handleActions(
       const payload = action.payload;
       if (isError) {
         // console.log(payload);
-        return state
-          .set("isGlobalError", true)
-          .set("globalError", Immutable.fromJS(payload.response.errors));
+        return {
+          ...state,
+          isGlobalError: true,
+          globalError: payload.response.errors
+        };
       }
       return state;
     },
@@ -30,10 +31,33 @@ const errorsReducer = handleActions(
       const isError = action.error;
       const payload = action.payload;
       if (isError) {
-        return state
-          .set("isGlobalError", true)
-          .set("globalError", Immutable.fromJS(payload.response.errors));
+        return {
+          ...state,
+          isGlobalError: true,
+          globalError: payload.response.errors
+        };
       }
+      return state;
+    },
+    GET_USERS_REQUEST: (state, action) => {
+      console.log("request ", state, action);
+      return state;
+    },
+    GET_USERS_FAILURE: (state, action) => {
+      // const isError = action.error;
+      // const payload = action.payload;
+      // if (isError) {
+      //   return state
+      //     .set("isGlobalError", true)
+      //     .set("globalError", Immutable.fromJS(payload.response.errors));
+      // }
+      console.log("state: ", state);
+      console.log("action: ", action.error);
+      return state;
+    },
+    SORT_TALENTS_FAILURE: (state, action) => {
+      console.log("state ", state);
+      console.log("action", action);
       return state;
     }
   },

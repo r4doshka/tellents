@@ -1,35 +1,68 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Switch, Route } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
 import Landing from "./landing-page.js";
 import Skills from "../routes/Skills.js";
-import Search from "../routes/Search.js";
+import Search from "./search-page.js";
+import PropTypes from "prop-types";
+
 import "../App.css";
 import "../assets/bootstrap/css/bootstrap.min.css";
-import "../assets/styles/landing-styles.css";
-import "../assets/styles/landing-media.css";
-import "../assets/styles/media.css";
-import "../assets/styles/modals.css";
-
-import { currentUserSelector } from "../selectors";
+import "../assets/styles/base.css";
+// eslint-disable-next-line
+import { currentUserSelector, isUserAuthenticatedSelector } from "../selectors";
 
 class App extends Component {
   render() {
-    console.log(this.props.currentUserSelector);
+    const { isUserAuthenticated, history } = this.props;
     return (
-      <div className="App">
+      <Router>
         <Switch>
-          <Route path="/" component={Landing} />
+          <Route
+            exact
+            path="/landing"
+            render={() => (
+              <Landing logged={isUserAuthenticated} history={history} />
+            )}
+          />
+          <Route
+            exact
+            path="/search"
+            render={() => (
+              <Search logged={isUserAuthenticated} history={history} />
+            )}
+          />
           <Route path="/skills" component={Skills} />
-          <Route path="/search" component={Search} />
+
+          <Route
+            path="/"
+            render={() =>
+              isUserAuthenticated ? (
+                <Redirect to="/search" />
+              ) : (
+                <Redirect to="/landing" />
+              )
+            }
+          />
         </Switch>
-      </div>
+      </Router>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  isUserAuthenticated: currentUserSelector(state)
-});
+const mapStateToProps = state => {
+  return {
+    isUserAuthenticated: isUserAuthenticatedSelector(state)
+  };
+};
 
+App.propTypes = {
+  history: PropTypes.object,
+  isUserAuthenticated: PropTypes.bool
+};
 export default connect(mapStateToProps)(App);

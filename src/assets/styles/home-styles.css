@@ -1,6 +1,10 @@
 /*HOME-PAGE - START*/
 @import url('chat-window.css');
 
+.home-page{
+    overflow: hidden;
+}
+
 .home-page .wrapper {
     position: relative;
     padding-bottom: 98px;
@@ -236,6 +240,8 @@
 .filter-block .checkbox-block label {
     padding: 2px 0 2px 20px;
     margin: 0;
+    position: relative;
+    cursor: pointer;
 }
 .filter-checkbox {
     position: absolute;
@@ -489,7 +495,6 @@
     position: relative;
     width: 55px;
     height: 55px;
-    background-image: url(../images/bid-photo.png);
 }
 .job-box .job-box-photo-block .notif {
     top: 0;
@@ -664,6 +669,8 @@
 }
 .job-box .job-box-deskr .text {
     font-size: 13px;
+    height: 100px;
+    overflow: hidden;
 }
 .job-box .job-box-footer{
     background-color: rgba(21,164,250, 0.1);
@@ -991,15 +998,12 @@ footer{
     text-transform: uppercase;
      color: #768b98;
     margin-top: 30px;
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
     background: #fff;
 }
 
-footer span{
-    float: left;
-}
 
 footer ul{
     float: right;
@@ -1011,7 +1015,6 @@ footer ul li{
 }
 
 footer ul li a{
-    padding: 0 15px;
     display: block;
     color: #768b98;
 }

@@ -20,7 +20,7 @@ class UITextInput extends Component {
 UITextInput.propTypes = {
   onChange: PropTypes.func,
   onBlure: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.any,
   placeholder: PropTypes.string,
   invalid: PropTypes.bool,
   type: PropTypes.string
